@@ -345,6 +345,18 @@ workers <- workers %>% left_join(puma_names, by = c("PUMA_Code")) %>% rename(PUM
 
 # Keep only the variables that will be used for PowerBI
 
+subset_data <- workers[1:10000, ]
+write.csv(subset_data, "subset_Workforce_ACS Data.csv")
+
+workers_export <- workers %>% 
+  select(perwt, MSA_Name, occ_type, occsoc, Occupation, Perc_Growth_10Yr, Avg_Annual_Earnings,
+         indnaics, Industry, Employment_Status, bpl,
+         Residence_PUMA, Work_PUMA, PUMA_Code, PUMA_Name, pwcounty, statefip, countyfip, City, 
+         Educational_Attainment, Education_Attainment_Rank, Degree_Field_Detailed, age, Sex, Race_Ethnicity, Veteran_Status,
+         Wage_Income, Commute_Time, Rent_or_Own, Health_Insurance) %>% 
+  uncount(perwt)
+
+
 workers_export <- workers %>% 
   select(perwt, MSA_FIPS, MSA_Name, occ_type, occsoc, Occupation, Jobs_2025, LQ_2025, Perc_Growth_5Yr, Perc_Growth_10Yr, Avg_Annual_Earnings,
          indnaics, Industry, Employment_Status, bpl,
