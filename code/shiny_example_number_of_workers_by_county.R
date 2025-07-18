@@ -27,7 +27,15 @@ micro_electronics <- raw_data %>%
   summarise(
     n_microelectronics_workers = n()
   )
+options(tigris_use_cache = TRUE)
 
+county_shapes <- counties(cb = TRUE, class = "sf") 
+
+subset_data <- county_shapes %>%
+  left_join(micro_electronics, by = "GEOID")
+
+
+pal <- colorNumeric(palette = "YlOrRd", domain = subset_data$n_microelectronics_workers)
 
 ui <- fluidPage(
   titlePanel("Microelectronics Workers by County"),
